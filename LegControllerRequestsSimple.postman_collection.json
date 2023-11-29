@@ -1,0 +1,121 @@
+{
+	"info": {
+		"_postman_id": "ee85b1de-ef53-44e8-b9db-b777f8e487c0",
+		"name": "Leg Controller Requests Simple",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25888317"
+	},
+	"item": [
+		{
+			"name": "PATCH Leg Color",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\n    \"op\":\"replace\",\n    \"path\":\"/color\",\n    \"value\":\"ORANGE\"\n}]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/unicorns/1/legs/FRONT_LEFT",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"unicorns",
+						"1",
+						"legs",
+						"FRONT_LEFT"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PATCH Leg Size",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\n    \"op\":\"replace\",\n    \"path\":\"/legSize\",\n    \"value\":\"SMALL\"\n}]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/unicorns/1/legs/FRONT_LEFT",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"unicorns",
+						"1",
+						"legs",
+						"FRONT_LEFT"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PATCH Leg Color & Size",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\n    \"op\":\"replace\",\n    \"path\":\"/legSize\",\n    \"value\":\"LARGE\"\n},\n{\n    \"op\":\"replace\",\n    \"path\":\"/color\",\n    \"value\":\"RASPBERRY\"\n}]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/unicorns/1/legs/FRONT_LEFT",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"unicorns",
+						"1",
+						"legs",
+						"FRONT_LEFT"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Leg",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/unicorns/1/legs/FRONT_LEFT",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"unicorns",
+						"1",
+						"legs",
+						"FRONT_LEFT"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

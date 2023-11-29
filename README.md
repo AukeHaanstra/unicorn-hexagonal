@@ -2,6 +2,8 @@
 
 This repository contains the three-layer backend web application (unicorn-simple), refactored to hexagonal architecture.
 
+For example requests to the Web API, see LegControllerRequestsSimple.postman_collection.json
+
 ## Sources
 
 - Get Your Hands Dirty on Clean Architecture, Tom Hombergs
