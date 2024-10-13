@@ -3,3 +3,16 @@ spring:
     console.enabled: true
   jpa:
     defer-datasource-initialization: true
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    open-in-view: false
+    hibernate:
+      ddl-auto: create-drop
+  datasource:
+    url: jdbc:h2:~/unicorn;AUTO_SERVER=TRUE;AUTO_SERVER_PORT=9092;USER=sa;PASSWORD=admin
+    driver-class-name: org.h2.Driver
+  sql:
+    init:
+      mode: always
