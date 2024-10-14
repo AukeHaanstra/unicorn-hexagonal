@@ -1,0 +1,140 @@
+{
+	"info": {
+		"_postman_id": "9c55e5e0-35aa-4d66-bcb7-199c21078e14",
+		"name": "Unicorn App Requests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25888317"
+	},
+	"item": [
+		{
+			"name": "PATCH Leg Color",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\n    \"op\":\"replace\",\n    \"path\":\"/color\",\n    \"value\":\"PURPLE\"\n}]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/unicorns/FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF/legs/BACK_LEFT",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"unicorns",
+						"FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF",
+						"legs",
+						"BACK_LEFT"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PATCH Leg Size",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\n    \"op\":\"replace\",\n    \"path\":\"/legSize\",\n    \"value\":\"LARGE\"\n}]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/unicorns/FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF/legs/BACK_RIGHT",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"unicorns",
+						"FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF",
+						"legs",
+						"BACK_RIGHT"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PATCH Leg Color & Size",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\n    \"op\":\"replace\",\n    \"path\":\"/legSize\",\n    \"value\":\"SMALL\"\n},\n{\n    \"op\":\"replace\",\n    \"path\":\"/color\",\n    \"value\":\"RASPBERRY\"\n}]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/unicorns/FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF/legs/FRONT_LEFT",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"unicorns",
+						"FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF",
+						"legs",
+						"FRONT_LEFT"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Leg",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/unicorns/FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF/legs/FRONT_LEFT",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"unicorns",
+						"FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF",
+						"legs",
+						"FRONT_LEFT"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Unicorn",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/unicorns/FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"unicorns",
+						"FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

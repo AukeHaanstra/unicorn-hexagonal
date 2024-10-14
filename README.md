@@ -1,6 +1,6 @@
 # Unicorn Backend Web Application
 
-This repository contains the three-layer backend web application (unicorn-simple), refactored to hexagonal architecture.
+This repository contains the three-layer backend web application, refactored to hexagonal architecture.
 
 For example requests to the Web API, see LegControllerRequestsSimple.postman_collection.json
 
