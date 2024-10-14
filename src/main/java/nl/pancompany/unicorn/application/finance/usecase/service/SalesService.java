@@ -12,11 +12,11 @@ public class SalesService implements CalculateTotalSalesUsecase {
     private final SalesRepository salesRepository;
 
     @Override
-    public SalesDto calculateTotalSales(UnicornId unicornId) {
+    public TotalSalesDto calculateTotalSales(UnicornId unicornId) {
         long total = salesRepository.findAllSales(unicornId).stream()
                 .filter(sale -> sale.unicornId().equals(unicornId))
                 .mapToLong(Sale::price)
                 .sum();
-        return new SalesDto(unicornId, total);
+        return new TotalSalesDto(unicornId, total);
     }
 }

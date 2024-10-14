@@ -12,7 +12,7 @@ public class FinancialHealthAdapter implements GetFinancialHealthPort {
     private final FinancialHealthMapper mapper;
 
     public FinancialHealthDto getFinancialHealth(Unicorn.UnicornId unicornId) {
-        CalculateTotalSalesUsecase.SalesDto salesDto = calculateSalesPort.calculateTotalSales(unicornId);
-        return mapper.toFinancialHealthDto(salesDto);
+        CalculateTotalSalesUsecase.TotalSalesDto totalSalesDto = calculateSalesPort.calculateTotalSales(unicornId);
+        return mapper.toFinancialHealthDto(totalSalesDto);
     }
 }

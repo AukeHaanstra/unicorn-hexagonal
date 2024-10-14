@@ -18,7 +18,7 @@ public interface FinancialHealthMapper {
     FinancialHealthMapper INSTANCE = getMapper(FinancialHealthMapper.class);
 
     @Mapping(target = "financialHealth", source="salesTotal", qualifiedByName = "calculateFinancialHealth")
-    FinancialHealthDto toFinancialHealthDto(CalculateTotalSalesUsecase.SalesDto salesDto);
+    FinancialHealthDto toFinancialHealthDto(CalculateTotalSalesUsecase.TotalSalesDto totalSalesDto);
 
     @Named("calculateFinancialHealth")
     default FinancialHealth calculateFinancialHealth(long salesTotal) {

@@ -11,7 +11,7 @@ public class CalculateSalesAdapter implements CalculateSalesPort {
     private final CalculateTotalSalesUsecase calculateTotalSalesUsecase;
 
     @Override
-    public CalculateTotalSalesUsecase.SalesDto calculateTotalSales(Unicorn.UnicornId unicornId) {
+    public CalculateTotalSalesUsecase.TotalSalesDto calculateTotalSales(Unicorn.UnicornId unicornId) {
         return calculateTotalSalesUsecase.calculateTotalSales(unicornId);
     }
 }

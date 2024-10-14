@@ -5,6 +5,6 @@ import nl.pancompany.unicorn.application.unicorn.domain.model.Unicorn;
 
 public interface CalculateSalesPort {
 
-    CalculateTotalSalesUsecase.SalesDto calculateTotalSales(Unicorn.UnicornId unicornId);
+    CalculateTotalSalesUsecase.TotalSalesDto calculateTotalSales(Unicorn.UnicornId unicornId);
 
 }

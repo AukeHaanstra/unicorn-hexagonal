@@ -4,8 +4,8 @@ import nl.pancompany.unicorn.application.unicorn.domain.model.Unicorn;
 
 public interface CalculateTotalSalesUsecase {
 
-    SalesDto calculateTotalSales(Unicorn.UnicornId unicornId);
+    TotalSalesDto calculateTotalSales(Unicorn.UnicornId unicornId);
 
-    record SalesDto(Unicorn.UnicornId unicornId, long salesTotal) {
+    record TotalSalesDto(Unicorn.UnicornId unicornId, long salesTotal) {
     }
 }
