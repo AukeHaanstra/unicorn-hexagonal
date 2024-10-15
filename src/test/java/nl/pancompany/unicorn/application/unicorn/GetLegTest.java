@@ -3,7 +3,7 @@ package nl.pancompany.unicorn.application.unicorn;
 import jakarta.validation.ConstraintViolationException;
 import nl.pancompany.unicorn.application.ApplicationTestContext;
 import nl.pancompany.unicorn.application.unicorn.port.in.GetLegUsecase;
-import nl.pancompany.unicorn.application.unicorn.port.out.UnicornRepositoryPort;
+import nl.pancompany.unicorn.application.unicorn.port.out.UnicornRepository;
 import nl.pancompany.unicorn.application.unicorn.domain.model.Color;
 import nl.pancompany.unicorn.application.unicorn.domain.model.Leg;
 import nl.pancompany.unicorn.application.unicorn.domain.model.Unicorn;
@@ -18,14 +18,14 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class GetLegTest {
 
-    UnicornRepositoryPort unicornRepositoryPort;
+    UnicornRepository unicornRepository;
     GetLegUsecase getLegUsecase;
     Unicorn savedUnicorn;
 
     @BeforeEach
     void setup() {
         ApplicationTestContext applicationTestContext = new ApplicationTestContext();
-        unicornRepositoryPort = applicationTestContext.getUnicornRepositoryPort();
+        unicornRepository = applicationTestContext.getUnicornRepository();
         getLegUsecase = applicationTestContext.getGetLegUsecase();
 
         Leg newLeg = new LegTestBuilder()
@@ -33,7 +33,7 @@ public class GetLegTest {
                 .color(Color.GREEN)
                 .legSize(Leg.LegSize.SMALL)
                 .build();
-        savedUnicorn = unicornRepositoryPort.add(new UnicornTestBuilder()
+        savedUnicorn = unicornRepository.add(new UnicornTestBuilder()
                 .defaults()
                 .withLeg(newLeg)
                 .build());

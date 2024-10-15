@@ -1,6 +1,6 @@
 package nl.pancompany.unicorn.common;
 
-public interface Dao<T, ID> {
+public interface Repository<T, ID> {
     T find(ID id);
 
     T add(T t);

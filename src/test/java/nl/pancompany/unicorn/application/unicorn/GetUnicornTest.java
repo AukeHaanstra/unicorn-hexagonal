@@ -3,7 +3,7 @@ package nl.pancompany.unicorn.application.unicorn;
 import nl.pancompany.unicorn.application.ApplicationTestContext;
 import nl.pancompany.unicorn.application.unicorn.port.in.GetUnicornUsecase;
 import nl.pancompany.unicorn.application.unicorn.port.out.GetFinancialHealthPort;
-import nl.pancompany.unicorn.application.unicorn.port.out.UnicornRepositoryPort;
+import nl.pancompany.unicorn.application.unicorn.port.out.UnicornRepository;
 import nl.pancompany.unicorn.application.unicorn.domain.model.Leg;
 import nl.pancompany.unicorn.application.unicorn.domain.model.Unicorn;
 import nl.pancompany.unicorn.application.unicorn.domain.model.Unicorn.UnicornId;
@@ -18,17 +18,17 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class GetUnicornTest {
 
-    UnicornRepositoryPort unicornRepositoryPort;
+    UnicornRepository unicornRepository;
     GetUnicornUsecase getUnicornUsecase;
     Unicorn savedUnicorn;
 
     @BeforeEach
     public void setup() {
         ApplicationTestContext applicationTestContext = new ApplicationTestContext();
-        unicornRepositoryPort = applicationTestContext.getUnicornRepositoryPort();
+        unicornRepository = applicationTestContext.getUnicornRepository();
         getUnicornUsecase = applicationTestContext.getGetUnicornUsecase();
 
-        savedUnicorn = unicornRepositoryPort.add(new UnicornTestBuilder().defaults().build());
+        savedUnicorn = unicornRepository.add(new UnicornTestBuilder().defaults().build());
     }
 
     @Test
@@ -52,7 +52,7 @@ public class GetUnicornTest {
 
     @Test
     void findUnicornHealth() {
-        unicornRepositoryPort.add(new UnicornTestBuilder().healthyDefaults().unicornId(UnicornId.of("ffffffff-ffff-ffff-ffff-ffffffffffff")).build());
+        unicornRepository.add(new UnicornTestBuilder().healthyDefaults().unicornId(UnicornId.of("ffffffff-ffff-ffff-ffff-ffffffffffff")).build());
         Unicorn.UnicornDto unicornDto = getUnicornUsecase.getUnicorn(UnicornId.of("ffffffff-ffff-ffff-ffff-ffffffffffff"));
         assertThat(unicornDto.health().getFinancialHealth()).isEqualTo(GetFinancialHealthPort.FinancialHealthDto.FinancialHealth.SUFFICIENT);
         assertThat(unicornDto.health().getPhysicalHealth()).isEqualTo(Unicorn.PhysicalHealth.MODERATE);

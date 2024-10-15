@@ -1,4 +1,4 @@
-package nl.pancompany.unicorn.adapter.unicorn.out.persistence.inmemory.dao;
+package nl.pancompany.unicorn.adapter.unicorn.out.persistence.inmemory;
 
 import nl.pancompany.unicorn.adapter.unicorn.out.persistence.database.model.UnicornJpaEntity;
 import nl.pancompany.unicorn.adapter.unicorn.out.persistence.database.model.UnicornLegJpaEntity;

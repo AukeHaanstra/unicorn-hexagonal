@@ -7,7 +7,7 @@ import nl.pancompany.unicorn.application.unicorn.domain.model.Leg;
 import nl.pancompany.unicorn.application.unicorn.domain.model.Unicorn;
 import nl.pancompany.unicorn.application.unicorn.usecase.exception.UnicornNotFoundException;
 import nl.pancompany.unicorn.application.unicorn.port.in.UpdateLegUsecase;
-import nl.pancompany.unicorn.application.unicorn.port.out.UnicornRepositoryPort;
+import nl.pancompany.unicorn.application.unicorn.port.out.UnicornRepository;
 import nl.pancompany.unicorn.testbuilders.LegTestBuilder;
 import nl.pancompany.unicorn.testbuilders.UnicornTestBuilder;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,14 +21,14 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 public class UpdateLegTest {
 
     static final String NIL_UUID = "00000000-0000-0000-0000-000000000000";
-    UnicornRepositoryPort unicornRepositoryPort;
+    UnicornRepository unicornRepository;
     UpdateLegUsecase updateLegUsecase;
     Unicorn savedUnicorn;
 
     @BeforeEach
     public void setup() {
         ApplicationTestContext applicationTestContext = new ApplicationTestContext();
-        unicornRepositoryPort = applicationTestContext.getUnicornRepositoryPort();
+        unicornRepository = applicationTestContext.getUnicornRepository();
         updateLegUsecase = applicationTestContext.getUpdateLegUsecase();
 
         Leg newLeg = new LegTestBuilder()
@@ -36,7 +36,7 @@ public class UpdateLegTest {
                 .color(Color.GREEN)
                 .legSize(Leg.LegSize.SMALL)
                 .build();
-        savedUnicorn = unicornRepositoryPort.add(new UnicornTestBuilder()
+        savedUnicorn = unicornRepository.add(new UnicornTestBuilder()
                 .defaults()
                 .withLeg(newLeg)
                 .build());
@@ -47,7 +47,7 @@ public class UpdateLegTest {
         var updateLegDto = new UpdateLegUsecase.UpdateLegDto(savedUnicorn.getUnicornId(), Leg.LegPosition.FRONT_LEFT, Color.RED, Leg.LegSize.SMALL);
         updateLegUsecase.updateLeg(updateLegDto);
 
-        Unicorn updatedUnicorn = unicornRepositoryPort.find(savedUnicorn.getUnicornId());
+        Unicorn updatedUnicorn = unicornRepository.find(savedUnicorn.getUnicornId());
         assertThat(updatedUnicorn.getLeg(Leg.LegPosition.FRONT_LEFT).getColor()).isEqualTo(Color.RED);
         assertThat(updatedUnicorn.getLeg(Leg.LegPosition.FRONT_LEFT).getLegSize()).isEqualTo(Leg.LegSize.SMALL);
     }
@@ -60,7 +60,7 @@ public class UpdateLegTest {
                 .color(Color.GREEN)
                 .legSize(Leg.LegSize.SMALL)
                 .build();
-        unicornRepositoryPort.add(new UnicornTestBuilder()
+        unicornRepository.add(new UnicornTestBuilder()
                 .defaults()
                 .unicornId(Unicorn.UnicornId.of(uuidUppercase))
                 .withLeg(newLeg)
@@ -68,7 +68,7 @@ public class UpdateLegTest {
         var updateLegDto = new UpdateLegUsecase.UpdateLegDto(Unicorn.UnicornId.of(uuidUppercase.toLowerCase()), Leg.LegPosition.FRONT_LEFT, Color.RED, Leg.LegSize.SMALL);
         updateLegUsecase.updateLeg(updateLegDto);
 
-        Unicorn updatedUnicorn = unicornRepositoryPort.find(Unicorn.UnicornId.of(uuidUppercase));
+        Unicorn updatedUnicorn = unicornRepository.find(Unicorn.UnicornId.of(uuidUppercase));
         assertThat(updatedUnicorn.getLeg(Leg.LegPosition.FRONT_LEFT).getColor()).isEqualTo(Color.RED);
         assertThat(updatedUnicorn.getLeg(Leg.LegPosition.FRONT_LEFT).getLegSize()).isEqualTo(Leg.LegSize.SMALL);
     }
@@ -81,7 +81,7 @@ public class UpdateLegTest {
                 .color(Color.GREEN)
                 .legSize(Leg.LegSize.SMALL)
                 .build();
-        unicornRepositoryPort.add(new UnicornTestBuilder()
+        unicornRepository.add(new UnicornTestBuilder()
                 .defaults()
                 .unicornId(Unicorn.UnicornId.of(uuidLowerCase))
                 .withLeg(newLeg)
@@ -89,7 +89,7 @@ public class UpdateLegTest {
         var updateLegDto = new UpdateLegUsecase.UpdateLegDto(Unicorn.UnicornId.of(uuidLowerCase.toUpperCase()), Leg.LegPosition.FRONT_LEFT, Color.RED, Leg.LegSize.SMALL);
         updateLegUsecase.updateLeg(updateLegDto);
 
-        Unicorn updatedUnicorn = unicornRepositoryPort.find(Unicorn.UnicornId.of(uuidLowerCase));
+        Unicorn updatedUnicorn = unicornRepository.find(Unicorn.UnicornId.of(uuidLowerCase));
         assertThat(updatedUnicorn.getLeg(Leg.LegPosition.FRONT_LEFT).getColor()).isEqualTo(Color.RED);
         assertThat(updatedUnicorn.getLeg(Leg.LegPosition.FRONT_LEFT).getLegSize()).isEqualTo(Leg.LegSize.SMALL);
     }
@@ -99,7 +99,7 @@ public class UpdateLegTest {
         var updateLegDto = new UpdateLegUsecase.UpdateLegDto(savedUnicorn.getUnicornId(), Leg.LegPosition.FRONT_LEFT, Color.GREEN, Leg.LegSize.LARGE);
         updateLegUsecase.updateLeg(updateLegDto);
 
-        Unicorn updatedUnicorn = unicornRepositoryPort.find(savedUnicorn.getUnicornId());
+        Unicorn updatedUnicorn = unicornRepository.find(savedUnicorn.getUnicornId());
         assertThat(updatedUnicorn.getLeg(Leg.LegPosition.FRONT_LEFT).getColor()).isEqualTo(Color.GREEN);
         assertThat(updatedUnicorn.getLeg(Leg.LegPosition.FRONT_LEFT).getLegSize()).isEqualTo(Leg.LegSize.LARGE);
     }
@@ -110,7 +110,7 @@ public class UpdateLegTest {
 
         updateLegUsecase.updateLeg(updateLegDto);
 
-        Unicorn updatedUnicorn = unicornRepositoryPort.find(savedUnicorn.getUnicornId());
+        Unicorn updatedUnicorn = unicornRepository.find(savedUnicorn.getUnicornId());
         assertThat(updatedUnicorn.getLeg(Leg.LegPosition.FRONT_LEFT).getColor()).isEqualTo(Color.RED);
         assertThat(updatedUnicorn.getLeg(Leg.LegPosition.FRONT_LEFT).getLegSize()).isEqualTo(Leg.LegSize.LARGE);
     }

@@ -1,16 +1,16 @@
 package nl.pancompany.unicorn.context.unicorn.adapter;
 
 import lombok.Getter;
-import nl.pancompany.unicorn.adapter.unicorn.out.persistence.inmemory.dao.UnicornJpaMapper;
-import nl.pancompany.unicorn.application.unicorn.port.out.UnicornRepositoryPort;
-import nl.pancompany.unicorn.adapter.unicorn.out.persistence.inmemory.dao.InMemoryUnicornDao;
+import nl.pancompany.unicorn.adapter.unicorn.out.persistence.inmemory.UnicornJpaMapper;
+import nl.pancompany.unicorn.application.unicorn.port.out.UnicornRepository;
+import nl.pancompany.unicorn.adapter.unicorn.out.persistence.inmemory.InMemoryUnicornRepository;
 
 @Getter
 public class InMemoryPersistenceContext {
 
-    private final UnicornRepositoryPort unicornRepositoryPort;
+    private final UnicornRepository unicornRepository;
 
     public InMemoryPersistenceContext() {
-        this.unicornRepositoryPort = new InMemoryUnicornDao(UnicornJpaMapper.INSTANCE);
+        this.unicornRepository = new InMemoryUnicornRepository(UnicornJpaMapper.INSTANCE);
     }
 }

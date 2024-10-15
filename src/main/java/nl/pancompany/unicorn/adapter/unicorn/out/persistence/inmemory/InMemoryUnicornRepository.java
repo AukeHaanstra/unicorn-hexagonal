@@ -1,21 +1,17 @@
-package nl.pancompany.unicorn.adapter.unicorn.out.persistence.inmemory.dao;
+package nl.pancompany.unicorn.adapter.unicorn.out.persistence.inmemory;
 
 import lombok.RequiredArgsConstructor;
-import nl.pancompany.unicorn.application.unicorn.port.out.UnicornRepositoryPort;
 import nl.pancompany.unicorn.application.unicorn.domain.model.Unicorn;
 import nl.pancompany.unicorn.application.unicorn.domain.model.Unicorn.UnicornId;
+import nl.pancompany.unicorn.application.unicorn.port.out.UnicornRepository;
 import nl.pancompany.unicorn.application.unicorn.usecase.exception.UnicornAlreadyExistsException;
 import nl.pancompany.unicorn.application.unicorn.usecase.exception.UnicornNotFoundException;
-import org.springframework.context.annotation.Profile;
-import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@Component
-@Profile("test")
 @RequiredArgsConstructor
-public class InMemoryUnicornDao implements UnicornRepositoryPort {
+public class InMemoryUnicornRepository implements UnicornRepository {
 
     private final UnicornJpaMapper unicornJpaMapper;
 

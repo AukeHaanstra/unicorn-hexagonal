@@ -5,7 +5,7 @@ import nl.pancompany.unicorn.application.finance.port.in.CalculateTotalSalesUsec
 import nl.pancompany.unicorn.application.unicorn.port.in.GetLegUsecase;
 import nl.pancompany.unicorn.application.unicorn.port.in.GetUnicornUsecase;
 import nl.pancompany.unicorn.application.unicorn.port.in.UpdateLegUsecase;
-import nl.pancompany.unicorn.common.Dao;
+import nl.pancompany.unicorn.common.Repository;
 import nl.pancompany.unicorn.application.unicorn.domain.model.Unicorn;
 import nl.pancompany.unicorn.context.finance.adapter.CalculateSalesAdapterContext;
 import nl.pancompany.unicorn.context.unicorn.adapter.FinanceAdapterContext;
@@ -20,11 +20,11 @@ public class ApplicationContext {
     private final UpdateLegUsecase updateLegUsecase;
     private final CalculateTotalSalesUsecase calculateTotalSalesUsecase;
 
-    public ApplicationContext(Dao<Unicorn, Unicorn.UnicornId> unicornDao) {
+    public ApplicationContext(Repository<Unicorn, Unicorn.UnicornId> unicornRepository) {
         FinanceContext financeContext = new FinanceContext();
         CalculateSalesAdapterContext calculateSalesAdapterContext = new CalculateSalesAdapterContext(financeContext.getSalesService());
         FinanceAdapterContext financeAdapterContext = new FinanceAdapterContext(calculateSalesAdapterContext.getCalculateSalesAdapter());
-        UnicornContext unicornContext = new UnicornContext(unicornDao, financeAdapterContext.getGetFinancialHealthPort());
+        UnicornContext unicornContext = new UnicornContext(unicornRepository, financeAdapterContext.getGetFinancialHealthPort());
         this.getUnicornUsecase = unicornContext.getGetUnicornService();
         this.getLegUsecase = unicornContext.getGetLegUsecase();
         this.updateLegUsecase = unicornContext.getUpdateLegUsecase();

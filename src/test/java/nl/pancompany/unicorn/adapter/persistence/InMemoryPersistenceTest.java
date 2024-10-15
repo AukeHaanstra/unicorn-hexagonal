@@ -8,6 +8,6 @@ class InMemoryPersistenceTest extends PersistenceTest {
     @BeforeEach
     public void setup() {
         InMemoryPersistenceContext inMemoryPersistenceContext = new InMemoryPersistenceContext();
-        unicornRepositoryPort = inMemoryPersistenceContext.getUnicornRepositoryPort();
+        unicornRepository = inMemoryPersistenceContext.getUnicornRepository();
     }
 }

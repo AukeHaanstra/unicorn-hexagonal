@@ -3,7 +3,7 @@ package nl.pancompany.unicorn.adapter.persistence;
 import nl.pancompany.unicorn.application.unicorn.domain.model.Leg;
 import nl.pancompany.unicorn.application.unicorn.domain.model.Unicorn;
 import nl.pancompany.unicorn.application.unicorn.domain.model.Unicorn.UnicornId;
-import nl.pancompany.unicorn.application.unicorn.port.out.UnicornRepositoryPort;
+import nl.pancompany.unicorn.application.unicorn.port.out.UnicornRepository;
 import nl.pancompany.unicorn.application.unicorn.usecase.exception.UnicornNotFoundException;
 import nl.pancompany.unicorn.testbuilders.LegTestBuilder;
 import nl.pancompany.unicorn.testbuilders.UnicornTestBuilder;
@@ -26,14 +26,14 @@ abstract class PersistenceTest {
     static final String NIL_UUID = "00000000-0000-0000-0000-000000000000";
 
     @Autowired
-    UnicornRepositoryPort unicornRepositoryPort;
+    UnicornRepository unicornRepository;
 
     @Test
     void addsAndFindsBack() {
         Unicorn unicorn = new UnicornTestBuilder().defaults().name("Prancey Dazzlepuff").build();
-        var savedUnicorn = unicornRepositoryPort.add(unicorn);
+        var savedUnicorn = unicornRepository.add(unicorn);
 
-        var foundUnicorn = unicornRepositoryPort.find(savedUnicorn.getUnicornId());
+        var foundUnicorn = unicornRepository.find(savedUnicorn.getUnicornId());
         assertThat(foundUnicorn).isEqualTo(savedUnicorn);
         assertThat(foundUnicorn.getLegs()).hasSize(4);
         assertThat(foundUnicorn.getName()).isEqualTo("Prancey Dazzlepuff");
@@ -44,9 +44,9 @@ abstract class PersistenceTest {
         String uuid = UUID.randomUUID().toString();
         Unicorn unicorn = new UnicornTestBuilder().defaults().name("Prancey Dazzlepuff")
                 .unicornId(UnicornId.of(uuid.toUpperCase())).build();
-        var savedUnicorn = unicornRepositoryPort.add(unicorn);
+        var savedUnicorn = unicornRepository.add(unicorn);
 
-        var foundUnicorn = unicornRepositoryPort.find(UnicornId.of(uuid.toLowerCase()));
+        var foundUnicorn = unicornRepository.find(UnicornId.of(uuid.toLowerCase()));
         assertThat(foundUnicorn).isEqualTo(savedUnicorn);
         assertThat(foundUnicorn.getLegs()).hasSize(4);
         assertThat(foundUnicorn.getName()).isEqualTo("Prancey Dazzlepuff");
@@ -57,9 +57,9 @@ abstract class PersistenceTest {
         String uuid = UUID.randomUUID().toString();
         Unicorn unicorn = new UnicornTestBuilder().defaults().name("Prancey Dazzlepuff")
                 .unicornId(UnicornId.of(uuid.toLowerCase())).build();
-        var savedUnicorn = unicornRepositoryPort.add(unicorn);
+        var savedUnicorn = unicornRepository.add(unicorn);
 
-        var foundUnicorn = unicornRepositoryPort.find(UnicornId.of(uuid.toUpperCase()));
+        var foundUnicorn = unicornRepository.find(UnicornId.of(uuid.toUpperCase()));
         assertThat(foundUnicorn).isEqualTo(savedUnicorn);
         assertThat(foundUnicorn.getLegs()).hasSize(4);
         assertThat(foundUnicorn.getName()).isEqualTo("Prancey Dazzlepuff");
@@ -67,12 +67,12 @@ abstract class PersistenceTest {
 
     @Test
     void throwsIfFindIdNotPersisted() {
-        assertThatThrownBy(() -> unicornRepositoryPort.find(UnicornId.of(NIL_UUID))).isInstanceOf(UnicornNotFoundException.class);
+        assertThatThrownBy(() -> unicornRepository.find(UnicornId.of(NIL_UUID))).isInstanceOf(UnicornNotFoundException.class);
     }
 
     @Test
     void throwsIfFindIdIsNull() {
-        assertThatThrownBy(() -> unicornRepositoryPort.find(null)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> unicornRepository.find(null)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -82,30 +82,30 @@ abstract class PersistenceTest {
                 .defaults()
                 .withLeg(leg)
                 .build();
-        Unicorn persistedUnicorn = unicornRepositoryPort.add(unicorn);
+        Unicorn persistedUnicorn = unicornRepository.add(unicorn);
         persistedUnicorn.setLegColor(leg.getLegPosition(), NAVY);
 
-        var updatedPersistedUnicorn = unicornRepositoryPort.update(persistedUnicorn);
+        var updatedPersistedUnicorn = unicornRepository.update(persistedUnicorn);
 
-        var foundUnicorn = unicornRepositoryPort.find(persistedUnicorn.getUnicornId());
+        var foundUnicorn = unicornRepository.find(persistedUnicorn.getUnicornId());
         assertThat(foundUnicorn).isEqualTo(updatedPersistedUnicorn);
         assertThat(foundUnicorn.getLeg(leg.getLegPosition()).getColor()).isEqualTo(NAVY);
     }
 
     @Test
     void throwsIfSaveEntityIsNull() {
-        assertThatThrownBy(() -> unicornRepositoryPort.add(null)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> unicornRepository.add(null)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void countsPersistedUnicorns() {
-        final long initialCount = unicornRepositoryPort.count();
-        unicornRepositoryPort.add(new UnicornTestBuilder().defaults().build());
-        assertThat(unicornRepositoryPort.count()).isEqualTo(initialCount + 1);
-        unicornRepositoryPort.add(new UnicornTestBuilder().defaults().build());
-        assertThat(unicornRepositoryPort.count()).isEqualTo(initialCount + 2);
-        unicornRepositoryPort.add(new UnicornTestBuilder().defaults().build());
-        assertThat(unicornRepositoryPort.count()).isEqualTo(initialCount + 3);
+        final long initialCount = unicornRepository.count();
+        unicornRepository.add(new UnicornTestBuilder().defaults().build());
+        assertThat(unicornRepository.count()).isEqualTo(initialCount + 1);
+        unicornRepository.add(new UnicornTestBuilder().defaults().build());
+        assertThat(unicornRepository.count()).isEqualTo(initialCount + 2);
+        unicornRepository.add(new UnicornTestBuilder().defaults().build());
+        assertThat(unicornRepository.count()).isEqualTo(initialCount + 3);
     }
 
     @Test
@@ -113,10 +113,10 @@ abstract class PersistenceTest {
         Unicorn unicorn = new UnicornTestBuilder().defaults().build();
         unicorn.setLegColor(FRONT_RIGHT, EMERALD);
 
-        var savedUnicorn = unicornRepositoryPort.add(unicorn);
+        var savedUnicorn = unicornRepository.add(unicorn);
         savedUnicorn.setLegColor(FRONT_RIGHT, SAPPHIRE);
 
-        var foundUnicorn = unicornRepositoryPort.find(savedUnicorn.getUnicornId());
+        var foundUnicorn = unicornRepository.find(savedUnicorn.getUnicornId());
         assertThat(foundUnicorn.getLeg(FRONT_RIGHT).getColor()).isEqualTo(EMERALD);
         assertThat(savedUnicorn == foundUnicorn).isFalse();
     }
@@ -124,13 +124,13 @@ abstract class PersistenceTest {
     @Test
     void dataButNotObjectItselfIsPersistedOnUpdate() {
         Unicorn unicorn = new UnicornTestBuilder().defaults().build();
-        var savedUnicorn = unicornRepositoryPort.add(unicorn);
+        var savedUnicorn = unicornRepository.add(unicorn);
         savedUnicorn.setLegColor(FRONT_RIGHT, SAPPHIRE);
 
-        var updatedUnicorn = unicornRepositoryPort.update(savedUnicorn);
+        var updatedUnicorn = unicornRepository.update(savedUnicorn);
         updatedUnicorn.setLegColor(FRONT_RIGHT, CHERRY);
 
-        var foundUnicorn = unicornRepositoryPort.find(updatedUnicorn.getUnicornId());
+        var foundUnicorn = unicornRepository.find(updatedUnicorn.getUnicornId());
         assertThat(foundUnicorn.getLeg(FRONT_RIGHT).getColor()).isEqualTo(SAPPHIRE);
         assertThat(updatedUnicorn == foundUnicorn).isFalse();
     }
@@ -140,7 +140,7 @@ abstract class PersistenceTest {
         Unicorn unicorn = new UnicornTestBuilder().defaults().build();
         unicorn.setLegColor(FRONT_RIGHT, EMERALD);
 
-        var savedUnicorn = unicornRepositoryPort.add(unicorn);
+        var savedUnicorn = unicornRepository.add(unicorn);
         savedUnicorn.setLegColor(FRONT_RIGHT, SAPPHIRE);
 
         assertThat(savedUnicorn).isNotEqualTo(unicorn);
@@ -150,10 +150,10 @@ abstract class PersistenceTest {
     @Test
     void returnsDifferentObjectOnUpdate() {
         Unicorn unicorn = new UnicornTestBuilder().defaults().build();
-        var savedUnicorn = unicornRepositoryPort.add(unicorn);
+        var savedUnicorn = unicornRepository.add(unicorn);
         savedUnicorn.setLegColor(FRONT_RIGHT, EMERALD);
 
-        var updatedUnicorn = unicornRepositoryPort.update(savedUnicorn);
+        var updatedUnicorn = unicornRepository.update(savedUnicorn);
         updatedUnicorn.setLegColor(FRONT_RIGHT, SAPPHIRE);
 
         assertThat(updatedUnicorn).isNotEqualTo(savedUnicorn);
